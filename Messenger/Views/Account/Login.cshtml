@@ -3,7 +3,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model Messenger.PL.ViewModels.LoginViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
 
+@inject IViewLocalizer Localizer
 <section class="vh-75">
     <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-75">
@@ -24,7 +26,6 @@
                         <span asp-validation-for="Email"></span>
 
                     </div>
-
                     <!-- Password input -->
                     <div class="form-floating mb-3">
                         <input class="form-control form-control-lg"
@@ -41,18 +42,22 @@
                             <label class="form-check-label" asp-for="RememberMe">
 
                             </label>
-                        </div>
-                        <a href="#!" class="text-body">Забули пароль?</a>
+                        </div>                    
+
+                        <a href="#!" class="text-body">@Localizer["ForgetPassWord"]</a>
                     </div>
 
                     <div class="text-center text-lg-start mt-4 pt-2">
                         <button type="submit" class="btn btn-primary btn-lg"
                                 style="padding-left: 2.5rem; padding-right: 2.5rem;">
-                            Ввійти
+                            @Localizer["Login"]
                         </button>
                         <p class="small fw-bold mt-2 pt-1 mb-0">
-                            Немає облікового запису? <a href="~/Account/Register"
-                                                        class="link-danger">Реєстрація</a>
+                            @Localizer["Don`t have account"]
+                            <a href="~/Account/Register"
+                               class="link-danger">
+                                @Localizer["Registration"]
+                            </a>
                         </p>
                     </div>
 

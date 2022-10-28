@@ -1,10 +1,12 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
 
 <div class="card text-center">
     <div class="card-header">
         <h3>
-            Welcome to the MassagerApp!
-            Log in or Sing in to start massaging
+        @Localizer["WelcomeMs"]
         </h3>
     </div>
 

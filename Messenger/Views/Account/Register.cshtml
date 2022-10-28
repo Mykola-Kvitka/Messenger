@@ -3,7 +3,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model Messenger.PL.ViewModels.RegisterViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
 
+@inject IViewLocalizer Localizer
 <!-- Section: Design Block -->
 <section class="text-center text-lg-start">
 
@@ -42,11 +44,11 @@
 
                             <!-- Submit button -->
                             <button type="submit" class="btn btn-primary btn-block mb-4">
-                                Реєстрація
+                                @Localizer["Registration"]
                             </button>
                         </form>
-                        </div>
                     </div>
+                </div>
             </div>
 
             <div class="col-lg-6 mb-5 mb-lg-0">

@@ -1,6 +1,10 @@
 ﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
+    @using Microsoft.AspNetCore.Mvc.Localization
+
+    @inject IViewLocalizer Localizer
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MessengerApp</title>
@@ -25,37 +29,42 @@
                         @if (!User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Login">@Localizer["Login"]</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Register">Registration</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Register"> @Localizer["Registration"] </a>
                             </li>
                         }
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Chat" asp-action="Create"> Start new chat/group </a>
+                                <a class="nav-link text-white" asp-controller="Chat" asp-action="Create">@Localizer["Start_new_chat/group"]  </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Contact" asp-action="Create"> Add contact </a>
+                                <a class="nav-link text-white" asp-controller="Contact" asp-action="Create"> @Localizer["Add contact"]  </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Contact" asp-action="Index"> My contacts </a>
+                                <a class="nav-link text-white" asp-controller="Contact" asp-action="Index"> @Localizer["My contacts"]  </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Chat" asp-action="Index"> My chats </a>
+                                <a class="nav-link text-white" asp-controller="Chat" asp-action="Index"> @Localizer["My chats"]  </a>
                             </li>
                             <li class="nav-item">
 
                                 <a class="nav-link text-white" asp-controller="Account" asp-action="Profile">@User.Identity.Name </a>
                             </li>
+
                             <li class="nav-item">
                                 <form method="post" asp-controller="Account" asp-action="Logout">
-                                    <input class=".bg-dark nav-link text-dark" type="submit" value="Exit" />
+                                    <input class=".bg-dark nav-link text-dark" type="submit" value="@Localizer["Logout"]" />
                                 </form>
                             </li>
                         }
+                        <li class="nav-item">
+                            @await Html.PartialAsync("_SelectLanguagePartial")
+                        </li>
+
                     </ul>
                 </div>
             </div>
