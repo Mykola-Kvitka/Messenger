@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Messenger.PL.ViewModels.ContactViewModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="list-group">
+    @foreach (var item in Model)
+    {
+        <div class="my-10">
+            <a href=@("/contact/" + item.ContactId) class="list-group-item list-group-item-action">@item.UserName</a>
+
+            <form method="post" asp-action="Delete" asp-route-id="@item.ContactId" class="btn-group-sm">
+                <input type="hidden" asp-for="@item.ContactId" />
+                <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Delete this contact?')" />
+            </form>
+        </div>
+    }
+</div>

@@ -1,0 +1,67 @@
+﻿@model Messenger.PL.ViewModels.MessegePagedViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="list-group">
+    @foreach (var item in Model.Massages)
+    {
+
+        <div class="card">
+            <div id="@item.OwnerId" class="card-body">
+                <h5 class="card-title">@item.UserName</h5>
+                <p class="card-text">
+                    @Html.Raw(item.Massage)
+                </p>
+            </div>
+            <div class="card-body">
+                <div class="reply-container">
+                    <button class="btn btn-primary" onclick="showHideReplyForm(this)">Reply</button>
+                    <form id="replyForm" style="display: none;" method="post" action="~/messege/replay">
+                        <input type="hidden" name="UserName" value="@item.UserName" />
+                        <input type="hidden" name="ChatId" value="@item.ChatId" />
+                        <textarea rows="3" class="form-control" required name="Messege" placeholder="Input your reply..."></textarea>
+                        <input type="submit" value="Add" class="btn btn-success" />
+                    </form>
+                </div>
+                @if (@item.UserName == User.Identity.Name)
+                {
+                    <div class="reply-container">
+                        <form method="post" asp-action="Delete" asp-route-id="@item.MessegeId" class="btn-group-sm">
+                            <input type="hidden" asp-for="@item.MessegeId" />
+                            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Delete for everyone?')" />
+                        </form>
+                    </div>
+                    <div class="reply-container">
+                        <form method="post" asp-action="SoftDelete" asp-route-id="@item.MessegeId" class="btn-group-sm">
+                            <input type="hidden" asp-for="@item.MessegeId" />
+                            <input type="submit" value="SoftDelete" class="btn btn-danger" onclick="return confirm('Delete for you?')" />
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+
+    }
+
+    <form style="display: initial;" id="newCommentForm" method="post" action="~/messege/create">
+        <input type="hidden" name="ChatId" value="@Model.ChatId" />
+        <input class="form-control" name="Massage" placeholder="Input your massage..." />
+        <input type="submit" class="btn btn-success" value="Add" />
+    </form>
+
+
+
+</div>
+    <div class="btn-group" role="group" aria-label="Page">
+        @if (Model.Page > 1)
+        {
+            <a type="button"
+               href="@Url.Action("Index", "Massage", new { id = Model.ChatId, page = Model.Page - 1 })"
+               class="btn btn-outline-primary">Previous</a>}
+
+        @if (Model.TotalCount > Model.PageSize * Model.Page)
+        {
+            <a type="button"
+               href="@Url.Action("Index", "Massage", new { id = Model.ChatId,page = Model.Page + 1})"
+               class="btn btn-primary">Next</a>}
+    </div>
+</div>

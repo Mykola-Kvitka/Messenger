@@ -1,0 +1,16 @@
+﻿@using System.Diagnostics.CodeAnalysis
+@model Messenger.PL.ViewModels.ContactViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div>
+    <h1>Start chat/group with:</h1>
+    <form method="post">
+       
+        <div>
+            <label class="form-label" asp-for="UserEmail"></label>
+            <input class="form-control" required type="email" name="UserEmail" asp-for="UserEmail" />
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary" value="Add" />
+        </div>
+    </form>
+</div>
