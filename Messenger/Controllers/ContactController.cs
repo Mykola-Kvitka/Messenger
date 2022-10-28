@@ -53,18 +53,33 @@ namespace Messenger.PL.Controllers
         [HttpPost("contact/addcontact")]
         public async Task<ActionResult> CreateAsync(ContactViewModel requestVm)
         {
-            requestVm.OwnerId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
+            var request = await _userManager.GetUserAsync(HttpContext.User);
+            //if (request.Email == requestVm.UserEmail)
+            //{
+            //    return Redirect("~/contact/error");
+            //}
+            
+                requestVm.OwnerId = request.Id;
 
-           var create = await _contactService.CreateAsync(_mapper.Map<ContactViewModel, Contact>(requestVm));
+                var create = await _contactService.CreateAsync(_mapper.Map<ContactViewModel, Contact>(requestVm));
 
-            if (create)
-            {
-                return Redirect("~/contact");
-            }
-            else
-            {
-                return Redirect("~/contact/error");
-            }
-            }
+                if (create)
+                {
+                    return Redirect("~/contact");
+                }
+                else
+                {
+                    return Redirect("~/contact/error");
+                }
+            
         }
+
+        [HttpGet("contact/delete/{id}")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            _contactService.DeleteAsync(id);
+            return View();
+        }
+
+    }
 }

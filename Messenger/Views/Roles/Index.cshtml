@@ -1,0 +1,28 @@
+﻿@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+@using Messenger.PL.ViewModels.Admin;
+@model AdminRolesViewModel
+
+<div class="list-group">
+    @foreach (var item in Model.Roles)
+    {
+<div class="my-10">
+    <a class="list-group-item list-group-item-action">@item.Name</a>
+    <form method="post" asp-action="Delete" asp-route-id="@item.Id" class="btn-group-sm">
+        <input type="hidden" asp-for="@item.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Видалити цю роль?')" />
+    </form>
+</div>}
+</div>
+<div class="btn-group" role="group" aria-label="Page">
+    @if (Model.Page > 1)
+    {
+<a type="button"
+   href="@Url.Action("Index", "Roles", new { page = Model.Page - 1 })"
+   class="btn btn-outline-primary">Previous</a>}
+
+    @if (Model.TotalCount > Model.PageSize * Model.Page)
+    {
+<a type="button"
+   href="@Url.Action("Index", "Roles", new { page = Model.Page + 1 })"
+   class="btn btn-primary">Next</a>}
+</div>
